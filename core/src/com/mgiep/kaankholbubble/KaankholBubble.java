@@ -35,7 +35,7 @@ public class KaankholBubble extends Game {
 
 	@Override
 	public void render () {
-
+        super.render();
 	}
 
 
@@ -43,5 +43,6 @@ public class KaankholBubble extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		font.dispose();
 	}
 }

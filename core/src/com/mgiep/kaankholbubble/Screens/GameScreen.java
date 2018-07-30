@@ -77,6 +77,7 @@ public class GameScreen implements Screen {
             if(touchPos == targetPos){
 
                 score++;
+                dispose();
             }
         }
 
