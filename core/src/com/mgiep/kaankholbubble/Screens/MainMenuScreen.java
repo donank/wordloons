@@ -14,13 +14,12 @@ public class MainMenuScreen implements Screen {
 
     final KaankholBubble game;
     OrthographicCamera camera;
-    private Texture startButtonTexture, background;
+    private Texture startButtonTexture;
 
 
     public MainMenuScreen(KaankholBubble game) {
         this.game = game;
         startButtonTexture = new Texture(Gdx.files.internal("images/khelobutton.png"));
-        background = new Texture(Gdx.files.internal("images/skybackground.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 480, 800);
     }
@@ -39,7 +38,7 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(background,0,0);
+        game.batch.draw(game.background,0,0);
         game.batch.draw(startButtonTexture, 120-32, 800/2);
         game.batch.end();
 
@@ -48,7 +47,7 @@ public class MainMenuScreen implements Screen {
             camera.unproject(tmp);
             Rectangle textureBounds = new Rectangle(120-32, 800/2, 292, 83);
             if(textureBounds.contains(tmp.x,tmp.y)){
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new LevelSelectScreen(game));
                 dispose();
             }
         }
@@ -76,7 +75,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
         startButtonTexture.dispose();
     }
 }

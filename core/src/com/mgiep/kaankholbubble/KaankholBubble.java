@@ -19,18 +19,13 @@ import java.util.Iterator;
 
 public class KaankholBubble extends Game {
 	public SpriteBatch batch;
-
-    public BitmapFont font;
+	public Texture background;
 
     @Override
 	public void create () {
-
 		batch = new SpriteBatch();
-
-		font = new BitmapFont();
-
 		this.setScreen(new MainMenuScreen(this));
-
+		background = new Texture(Gdx.files.internal("images/skybackground.png"));
 	}
 
 	@Override
@@ -43,6 +38,6 @@ public class KaankholBubble extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
+		background.dispose();
 	}
 }
