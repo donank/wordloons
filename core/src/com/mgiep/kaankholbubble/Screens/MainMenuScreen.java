@@ -4,15 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.mgiep.kaankholbubble.KaankholBubble;
+
+import java.awt.Rectangle;
 
 public class MainMenuScreen implements Screen {
 
     final KaankholBubble game;
     OrthographicCamera camera;
+    private Texture startButtonTexture, background;
+
 
     public MainMenuScreen(KaankholBubble game) {
         this.game = game;
+        startButtonTexture = new Texture(Gdx.files.internal("images/khelobutton.png"));
+        background = new Texture(Gdx.files.internal("images/skybackground.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 480, 800);
     }
@@ -31,13 +39,18 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Welcome to KaanKhol!!! ", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+        game.batch.draw(background,0,0);
+        game.batch.draw(startButtonTexture, 120-32, 800/2);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
+            Vector3 tmp = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+            camera.unproject(tmp);
+            Rectangle textureBounds = new Rectangle(120-32, 800/2, 292, 83);
+            if(textureBounds.contains(tmp.x,tmp.y)){
+                game.setScreen(new GameScreen(game));
+                dispose();
+            }
         }
     }
 
@@ -63,6 +76,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        startButtonTexture.dispose();
     }
 }
