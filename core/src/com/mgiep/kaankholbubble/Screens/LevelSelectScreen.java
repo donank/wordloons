@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureArray;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.mgiep.kaankholbubble.KaankholBubble;
 
 public class LevelSelectScreen implements Screen {
@@ -53,12 +55,19 @@ public class LevelSelectScreen implements Screen {
         game.batch.begin();
         game.batch.draw(game.background,0,0);
         int len = levels.length;
-        for(i=0;i<len;i++){
-            for(j = 0; j < )
+        for(i=0;i<3;i++){
+            for(j = 0; j < 3; j++){
+                game.batch.draw(levels[i][j], (j + 1) * 120 - 32, 800 - (i + 1) * 200);
+            }
         }
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
+            Vector3 tmp = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+            for(i = 0;i<3;i++){
+                for(j=0;j<3;j++){
+                }
+            }
             dispose();
         }
     }
