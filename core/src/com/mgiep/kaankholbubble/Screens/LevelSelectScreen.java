@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.mgiep.kaankholbubble.KaankholBubble;
 
-import java.util.logging.Logger;
+import jdk.internal.util.xml.impl.Pair;
 
 
 public class LevelSelectScreen implements Screen {
@@ -19,6 +19,7 @@ public class LevelSelectScreen implements Screen {
     private String TAG = LevelSelectScreen.class.getName();
 
     private Texture l1, l2, l3, l4, l5, l6, l7, l8, l9, l10;
+    private Pair p1;
     private Texture[][] levels;
     private int i = 0, j = 0;
 
@@ -38,6 +39,7 @@ public class LevelSelectScreen implements Screen {
         l8 = new Texture(Gdx.files.internal("images/l8.png"));
         l9 = new Texture(Gdx.files.internal("images/l9.png"));
         l10 = new Texture(Gdx.files.internal("images/l10.png"));
+
 
         levels = new Texture[][]{{l1, l2, l3}, {l4, l5, l6}, {l7, l8, l9}};
     }
@@ -69,49 +71,13 @@ public class LevelSelectScreen implements Screen {
             Vector3 tmp = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
             camera.unproject(tmp);
 
-            for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
+
                     java.awt.Rectangle textureBounds = new java.awt.Rectangle((j + 1) * 120 - 32, 800 - (i + 1) * 200, levels[i][j].getWidth(), levels[i][j].getHeight());
                     if(textureBounds.contains(tmp.x,tmp.y)){
-                        if(tmp.y == 800 ){
-                            if(tmp.x == 88){
-                                launchLevel1();
-                            }
-                            if(tmp.x == 208){
-                                //launch level
-                            }
-                            if(tmp.x == 328){
-                                //launch level
-                            }
-                        }
-                        if(tmp.y == 400 ){
-                            if(tmp.x == 88){
-                                //launch level
-                            }
-                            if(tmp.x == 208){
-                                //launch level
-                            }
-                            if(tmp.x == 328){
-                                //launch level
-                            }
-                        }
-                        if(tmp.y == 200 ){
-                            if(tmp.x == 88){
-                                //launch level
-                            }
-                            if(tmp.x == 208){
-                                //launch level
-                            }
-                            if(tmp.x == 328){
-                                //launch level
-                            }
-                        }
 
-                        dispose();
                     }
-                }
-            }
-            dispose();
+
+
         }
     }
 
