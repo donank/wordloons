@@ -5,10 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mgiep.kaankholbubble.KaankholBubble;
-
-import jdk.internal.util.xml.impl.Pair;
 
 
 public class LevelSelectScreen implements Screen {
@@ -16,18 +15,21 @@ public class LevelSelectScreen implements Screen {
     final KaankholBubble game;
     OrthographicCamera camera;
 
+    private Stage stage;
+
     private String TAG = LevelSelectScreen.class.getName();
 
     private Texture l1, l2, l3, l4, l5, l6, l7, l8, l9, l10;
-    private Pair p1;
     private Texture[][] levels;
     private int i = 0, j = 0;
-
 
     public LevelSelectScreen(KaankholBubble game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 480, 800);
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
 
         l1 = new Texture(Gdx.files.internal("images/l1.png"));
         l2 = new Texture(Gdx.files.internal("images/l2.png"));
@@ -54,6 +56,9 @@ public class LevelSelectScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        stage.act(delta);
+        stage.draw();
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -68,16 +73,9 @@ public class LevelSelectScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            Vector3 tmp = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
-            camera.unproject(tmp);
-
-
-                    java.awt.Rectangle textureBounds = new java.awt.Rectangle((j + 1) * 120 - 32, 800 - (i + 1) * 200, levels[i][j].getWidth(), levels[i][j].getHeight());
-                    if(textureBounds.contains(tmp.x,tmp.y)){
-
-                    }
-
-
+            //Vector3 tmp = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+            //camera.unproject(tmp);
+            game.setScreen(new LearnScreen(game));
         }
     }
 
@@ -88,7 +86,7 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -118,5 +116,6 @@ public class LevelSelectScreen implements Screen {
         l8.dispose();
         l9.dispose();
         l10.dispose();
+        stage.dispose();
     }
 }
